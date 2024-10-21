@@ -4,6 +4,8 @@ const [...input] =fs.readFileSync(0).toString().trim().split('\n');
 const twenties = input.filter(v=>(+v)<30);
 const average = (strArr) => {
     const sum = strArr.reduce((acc,curr)=>acc+=(+curr),0);
-    return sum/strArr.length;
+    const avg =  sum/strArr.length;
+    return ((Math.round(avg*100))/100).toFixed(2)
 }
-console.log(average(twenties).toFixed(2));
+
+console.log(average(twenties));
