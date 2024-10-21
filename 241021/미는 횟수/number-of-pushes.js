@@ -23,8 +23,8 @@
 
 const lines = require('fs').readFileSync(0).toString().trim().split('\n');
 const B = lines[1]; 
-const strings = [];
 let A = lines[0];
+const strings = [A];
 let cnt = 1;
 
 // 해당 코드는 A 요소들을 다 하나씩 밀어봤을 때까지만 실행합니다.
@@ -37,6 +37,6 @@ while (cnt < A.length) {
 }
 
 // 새로 만들었던 string들을 추가해줬던 배열 strings 중 B가 있는지 확인합니다.
-// 없다면 -1, 있다면 인덱스+1를 추가하셨습니다.
+// 없다면 -1, 있다면 인덱스+1를 추가합니다.
 // console.log(strings.indexOf(B) === -1 ? -1 : strings.indexOf(B) + 1);
 console.log(strings.indexOf(B)<0?-1:strings.indexOf(B));
