@@ -5,7 +5,7 @@ const hasGreatestCommonDiviser = (min,max)=>{
     const NUM1 = 1_920;
     const NUM2 =  2_880;
     let a = min;
-    while(a<NUM2){
+    while(a<=max){
         if(NUM1%a===0 && NUM2%a===0){
             return 1;
         } else {
