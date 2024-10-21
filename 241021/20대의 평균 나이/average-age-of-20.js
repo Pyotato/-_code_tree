@@ -14,7 +14,7 @@ while(nums.length>0){
 
 const average = (strArr)=>{
     const sum = strArr.reduce((acc,curr)=>acc+=curr,0);
-    return (Math.floor((sum/strArr.length)*100)/100).toFixed(2);
+    return (sum/strArr.length).toFixed(2);
 }
 
 console.log(average(twenties));
