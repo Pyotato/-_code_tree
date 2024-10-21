@@ -6,4 +6,4 @@ const average = (strArr) => {
     const sum = strArr.reduce((acc,curr)=>acc+=(+curr),0);
     return sum/strArr.length;
 }
-console.log(average(twenties));
+console.log(average(twenties).toFixed(2));
