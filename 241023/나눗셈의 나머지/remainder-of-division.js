@@ -3,7 +3,7 @@ let [a,b] = [...fs.readFileSync('/dev/stdin').toString().trim().split(' ').map(v
 
 const quotients = [];
 
-while(a>=1){
+while(a>1){
     quotients.push(a%b);
     a = Math.floor(a/b);
 }
