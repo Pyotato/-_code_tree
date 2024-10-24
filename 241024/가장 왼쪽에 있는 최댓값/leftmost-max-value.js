@@ -5,8 +5,6 @@ const numbers = strNums.split(' ').map(v => +v);
 
 const answer = [];
 
-console.log(numbers);
-
 while(numbers.length>0){
     const maxIndex = numbers.indexOf(Math.max(...numbers));
     answer.push(maxIndex+1);
