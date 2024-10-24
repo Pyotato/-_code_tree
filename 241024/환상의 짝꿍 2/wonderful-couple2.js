@@ -2,7 +2,7 @@ const fs = require('fs');
 const [nk,nums] = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 const [_, K] = nk.split(' ').map(v => +v);
 
-const numbers = nums.split(' ').map(v => +v);
+const numbers = nums.split(' ').map(v => +v).sort((a,b)=>a-b);
 
 const canWinGame = ()=>{
     while(numbers.length>0){
