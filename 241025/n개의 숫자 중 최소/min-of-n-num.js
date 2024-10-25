@@ -6,7 +6,7 @@ const minNum = Math.min(...numbers);
 
 
 const countAppearance = (target)=>{
-    const regex = new RegExp(`${target}`,'g');
+    const regex = new RegExp(`${target} `,'g');
     return nums.split(' ').join(' ').match(regex).length;
 } 
 
