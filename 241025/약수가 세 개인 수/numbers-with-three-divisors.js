@@ -18,7 +18,7 @@ const largestCommonDivisorCountIs3 = (n)=>{
     return LargestCommonDivisorCount.size===3? true:false;
 }
 
-for(let i=start;i<end;i++){
+for(let i=start;i<=end;i++){
     count += largestCommonDivisorCountIs3(i)? 1 :0;
 }
 
