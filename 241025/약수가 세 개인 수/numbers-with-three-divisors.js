@@ -5,17 +5,17 @@ let count = 0;
 
 const largestCommonDivisorCountIs3 = (n)=>{
     let commonDivisor = 1;
-    let LargestCommonDivisorCount = 0;
+    const LargestCommonDivisorCount = new Set([0]);
     while(commonDivisor<=n/2){
-        if(n%commonDivisor===0){
-            LargestCommonDivisorCount++;
+        if(n%commonDivisor === 0){
+            LargestCommonDivisorCount.add(commonDivisor);
         }
         if(LargestCommonDivisorCount>3){
             return false;
         }
         commonDivisor++;
     }
-    return LargestCommonDivisorCount===3? true:false;
+    return LargestCommonDivisorCount.size===3? true:false;
 }
 
 for(let i=start;i<end;i++){
