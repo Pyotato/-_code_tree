@@ -1,16 +1,10 @@
 const fs = require('fs');
 const numbers = fs.readFileSync('/dev/stdin').toString().trim().split(' ');
 
-const num = [];
+const zeroIndex = numbers.indexOf('0');
 
-while(numbers.length>0){
-    const current = +(numbers.splice(0,1)[0]);
-    if(current === 0){
-        break;
-    }
-    num.push(current);
-}
+const threeFromZeroIndex = numbers.slice(zeroIndex-3,zeroIndex);
 
-const sum = num.reduce((acc,curr)=>acc+=curr,0);
+const sum = threeFromZeroIndex.reduce((acc,curr)=>acc+=(+curr),0);
 
 console.log(sum);
