@@ -6,13 +6,10 @@ const A = 'A'.charCodeAt(0);
 const Z = 'Z'.charCodeAt(0);
 let startChar = A;
 
-while(count<n){
-    console.log(Array.from({length:count+1},()=>{
-        if(startChar-1===Z){
-            startChar = A;
-             return String.fromCharCode(startChar);
-        }
-        return String.fromCharCode(startChar++)
-        }).join(''))
-    count++;
-}
+const alphabets = Array.from({length:n},(_,i)=>Array.from({length:i+1},()=>{
+    let curr = startChar;
+    startChar = curr+1>Z ? A: curr+1;
+    return String.fromCharCode(curr++);
+}).join(''));
+
+console.log(alphabets.join('\n'));
