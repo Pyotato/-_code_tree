@@ -1,7 +1,6 @@
 const fs = require('fs');
 const n = +(fs.readFileSync('/dev/stdin').toString().trim());
 
-let count = 0
 const A = 'A'.charCodeAt(0);
 const Z = 'Z'.charCodeAt(0);
 let startChar = A;
