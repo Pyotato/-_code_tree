@@ -4,6 +4,6 @@ const n = +(fs.readFileSync('/dev/stdin').toString().trim());
 let counter = 1;
 
 while(counter<=n){
-    console.log(''.padStart(2*counter,`${counter} `));
+    console.log(...Array.from({length:counter},()=>counter));
     counter++;
 }
