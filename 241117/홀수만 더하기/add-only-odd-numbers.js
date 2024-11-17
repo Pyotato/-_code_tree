@@ -6,7 +6,7 @@ let count = 0;
 while(ns.length>0){
     let n = +(ns.pop());
     if(n%3===0 && n%2==1){
-        count++;
+        count+=n;
     }
 }
 
