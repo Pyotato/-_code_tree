@@ -8,7 +8,7 @@ const priority = (A,B) => {
     if(A[0]<B[0]){
         return 'B'
     }
-    return A[1]<B[1]?'A':'B';
+    return A[1]<B[1]?'B':'A';
 }
 
 console.log(priority(A,B));
