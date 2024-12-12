@@ -21,7 +21,7 @@ const maxSequence = (K)=>{
         const curr = filtered.splice(0,1)[0];
         if(curr==num){
             if(seq[curr]==null){
-                seq[curr]=[1];
+                seq[curr]=[2];
             } else {
                 seq[curr][seq[curr].length-1]++;
             }
