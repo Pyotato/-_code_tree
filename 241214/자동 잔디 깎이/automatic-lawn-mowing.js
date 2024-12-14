@@ -85,5 +85,5 @@ moves.forEach((v)=>{
             grid.push([nx,ny,false,time+i]);
         }
     }
-})
-console.log(revisitedTime.length===0?-1:Math.min(...revisitedTime));
+});
+console.log(revisitedTime.length===0?-1:Math.min(...revisitedTime.filter((v=>!Number.isNaN(v)))));
