@@ -86,5 +86,4 @@ moves.forEach((v)=>{
         }
     }
 })
-
-console.log(Math.min(...revisitedTime));
+console.log(revisitedTime.length===0?-1:Math.min(...revisitedTime));
