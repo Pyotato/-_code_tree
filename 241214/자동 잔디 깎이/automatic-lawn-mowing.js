@@ -80,10 +80,11 @@ moves.forEach((v)=>{
         const [moveX,moveY] = directions[direction](i);
         const [nx,ny] = [x+moveX,y+moveY];
         if(revisited(nx,ny,null,time+i)){
-            grid.push([nx,ny,true.time+i]);
+            grid.push([nx,ny,true,time+i]);
         } else {
             grid.push([nx,ny,false,time+i]);
         }
     }
 });
+
 console.log(revisitedTime.length===0?-1:Math.min(...revisitedTime.filter((v=>!Number.isNaN(v)))));
