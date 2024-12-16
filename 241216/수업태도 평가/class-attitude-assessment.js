@@ -21,6 +21,9 @@ const studentByScore = Object.keys(STUDENTS).reduce((acc,curr)=>{
 
 const [__,secondLowestStudents] = Object.values(studentByScore);
 
+if(secondLowestStudents==null){
+   console.log('Tie');
+}
 if(secondLowestStudents.length==1){
     console.log(secondLowestStudents[0]);
 } else {
