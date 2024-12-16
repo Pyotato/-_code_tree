@@ -9,25 +9,20 @@ studentNGrades.forEach((stGr)=>{
     STUDENTS[name]+=+grade;
 });
 
-const studentGrades = Object.values(STUDENTS);
-const studentNames = Object.keys(STUDENTS);
-const lowestGrade = Math.min(...studentGrades);
+const studentByScore = Object.keys(STUDENTS).reduce((acc,curr)=>{
+    if(acc[STUDENTS[curr]]==null){
+        acc[STUDENTS[curr]] = [curr];
+    } else {
+        acc[STUDENTS[curr]].push(curr);
+    }
+    return acc;
+},{});
 
-const printSecondLowest = (STUDENTS)=>{
-    const filteredLowest = studentNames.filter(key => STUDENTS[key]!=lowestGrade);
-    const secondLowestStudents = filteredLowest.sort((a,b)=>filteredLowest[b]-filteredLowest[a]);
-    const secondlowestGradeStudent = secondLowestStudents.pop();
-    const secondlowestGrade = STUDENTS[secondlowestGradeStudent];
-    const secondlowestGradeStudents = studentNames.filter(key => STUDENTS[key]==secondlowestGrade);
-    if(secondlowestGradeStudents.length===1){
-        return secondlowestGradeStudents[0];
-    }
-    if(filteredLowest.length===0 || secondlowestGradeStudents.length>1){
-        return 'Tie';
-    }
-    return secondlowestGradeStudent;
+
+const [_,secondLowestStudents] = Object.values(studentByScore);
+
+if(secondLowestStudents.length==1){
+    console.log(secondLowestStudents[0]);
+} else {
+    console.log('Tie');
 }
-
-console.log(printSecondLowest(STUDENTS));
-
-
