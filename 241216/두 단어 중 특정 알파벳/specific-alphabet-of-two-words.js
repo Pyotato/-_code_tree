@@ -11,27 +11,6 @@ const alphabetCount= alphabetArr.reduce((acc,curr)=>{
 },{});
 
 
-const generateCombinations = (N,wordArr) => {
-    const result = [];
-    const backtrack = (current) => {
-        
-        if (current.length === N) {
-            result.push(current.map((v,i)=>wordArr[i][v]).join(''));
-            return;
-        }
-        current.push(0);
-        backtrack(current);
-        current.pop(); 
-        
-        current.push(1);
-        backtrack(current);
-        current.pop(); 
-    };
-
-    backtrack([]); 
-    return result;
-};
-
 const alphaSet = str => {
     const strArr = str.split('');
     return strArr.reduce((acc,curr)=>{
@@ -44,13 +23,33 @@ const alphaSet = str => {
     },{})
 }
 
-const alphabetSetCount = generateCombinations(+N,wordArr).map(v=>alphaSet(v));
+const alphabetSets = wordArr.map(v => {
+    const [a,b] = v.map(item=>alphaSet(item));
+    const total = {};
+    for(let i of [...new Set([...Object.keys(a),...Object.keys(b)])]){
+        if(total[i]==null){
+            if(a[i]!=null && b[i]!=null){
+                total[i]= Math.max(b[i],a[i]);
+            } else {
+                total[i]=b[i]==null?a[i]:b[i];
+            }
+        } else {
+            if(a[i]!=null && b[i]!=null){
+                total[i]+= Math.max(b[i],a[i]);
+            } else {
+               total[i]+=b[i]==null?a[i]:b[i]; 
+            }
+            
+        }
+    }
+    return total;
+});
 
-alphabetSetCount.forEach(obj => {
-    const keys = Object.keys(obj);
-    keys.forEach(key=>{
-        alphabetCount[key] = Math.max(obj[key],alphabetCount[key]);
-    })
+alphabetSets.forEach(keyVal=>{
+    const keys = Object.keys(keyVal);
+    for(let key of keys){
+        alphabetCount[key]+=keyVal[key];
+    }
 })
 
-console.log(Object.values(alphabetCount).join('\n'));
+console.log(Object.values(alphabetCount).join('\n'))
