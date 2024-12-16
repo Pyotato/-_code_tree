@@ -10,7 +10,11 @@ studentGrades.forEach((stGr)=>{
 });
 
 const printSecondLowest = (STUDENTS)=>{
-    const lowestGrade = Math.min(...Object.values(STUDENTS));
+    const studentNames = Object.values(STUDENTS);
+    if(studentNames.length===1){
+        return studentNames[0];
+    }
+    const lowestGrade = Math.min(...studentNames);
     const filteredLowest = Object.keys(STUDENTS).filter(key => STUDENTS[key]!=lowestGrade);
     const secondLowestStudents = filteredLowest.sort((a,b)=>filteredLowest[b]-filteredLowest[a]);
     const secondlowestGradeStudent = secondLowestStudents.pop();
