@@ -19,7 +19,7 @@ const studentByScore = Object.keys(STUDENTS).reduce((acc,curr)=>{
 },{});
 
 
-const [_,secondLowestStudents] = Object.values(studentByScore);
+const [__,secondLowestStudents] = Object.values(studentByScore);
 
 if(secondLowestStudents.length==1){
     console.log(secondLowestStudents[0]);
