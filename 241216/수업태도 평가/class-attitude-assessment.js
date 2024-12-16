@@ -24,7 +24,7 @@ const [__,secondLowestStudents] = Object.values(studentByScore);
 if(secondLowestStudents==null){
    console.log('Tie');
 }
-if(secondLowestStudents.length==1){
+else if(secondLowestStudents.length==1){
     console.log(secondLowestStudents[0]);
 } else {
     console.log('Tie');
