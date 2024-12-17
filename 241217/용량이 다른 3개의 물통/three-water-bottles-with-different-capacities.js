@@ -18,6 +18,7 @@ const moveWater = (_to,_from)=>{
         _to.current+=_from.current;
         _from.current = 0;
     }
+    return [_to,_from];
 }
 
 while(true){
