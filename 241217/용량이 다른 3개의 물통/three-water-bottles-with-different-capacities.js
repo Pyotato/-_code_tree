@@ -11,13 +11,18 @@ const moveWater = (_to,_from)=>{
     if(_to.current===_to.max){
         return [_to,_from];
     }
-    if(_to.current+_from.current>_to.max){
-        _to.current = _to.max;
-        _from.current = _from.current-_to.max>=0?_from.current-_to.max:0;
-    } else {
-        _to.current+=_from.current;
+    const added = _from.current + _to.current;
+    
+    if(added <= _to.max){
+        _to.current = added;
         _from.current = 0;
     }
+
+    if(added > _to.max){
+        _to.current = _to.max;
+        _from.current = added-_to.current;
+    }
+
     return [_to,_from];
 }
 
