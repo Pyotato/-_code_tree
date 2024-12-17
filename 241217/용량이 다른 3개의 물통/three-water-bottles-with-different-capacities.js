@@ -7,6 +7,10 @@ const MAX = 100;
 let count = 0;
 
 const moveWater = (_to,_from)=>{
+    // 시작이 포과인 경우 => 유지
+    if(_to.current===_to.max){
+        return [_to,_from];
+    }
     if(_to.current+_from.current>_to.max){
         _to.current = _to.max;
         _from.current = _from.current-_to.max>=0?_from.current-_to.max:0;
@@ -14,7 +18,6 @@ const moveWater = (_to,_from)=>{
         _to.current+=_from.current;
         _from.current = 0;
     }
-    return [_to,_from];
 }
 
 while(true){
