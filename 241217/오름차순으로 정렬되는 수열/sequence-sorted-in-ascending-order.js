@@ -1,5 +1,5 @@
 const fs = require('fs'); 
-const [N,...nums] = fs.readFileSync(0).toString().trim().split('\n');
+const [_,...nums] = fs.readFileSync(0).toString().trim().split('\n');
 
 const numSeq = nums.map(Number);
 
@@ -17,38 +17,30 @@ const filterReplicants = (arr)=>{
 }
 
 
-const setArr = filterReplicants(numSeq);
-const sorted = [...setArr].sort((a,b)=>a-b);
+const replicantFiltered = filterReplicants(numSeq);
+const sorted = [...replicantFiltered].sort((a,b)=>a-b);
 
 const isSpecialSequence = (arr)=>{
     const sorted = [...arr].sort((a,b)=>a-b).join('');
     return sorted === arr.join('');
 }
 
-let answer = 0;
-
-const filtered =filterReplicants(sorted);
-
-for(let i=0;i<+N;i++){
-    const copy = [...setArr];
-    const spliced = copy.splice(i,1)[0];
-    if(isSpecialSequence(copy)){
-        const sortedIndex = filtered.indexOf(spliced);
-        const currentIndex = i;
-        if(currentIndex<sortedIndex){
-            for(let j=currentIndex;j<=sortedIndex;j++){
-                if(setArr[j+1]!=spliced){
-                    answer++;
-                }
-            }
-        } else {
-            for(let j=sortedIndex;j<=currentIndex;j++){
-                if(setArr[j]!=spliced){
-                    answer++;
-                }
-            }
+const nearestIndex = (num,arr,numIndex)=>{
+    const indexArr = [];
+    arr.forEach((v,i)=>{
+        if(v===num){
+            indexArr.push(i)
         }
-    }
+    });
+    return Math.min(...indexArr.map(v=>Math.abs(v-numIndex)));
 }
 
-console.log(answer); 
+
+for(let index in replicantFiltered){
+    const copy = [...replicantFiltered];
+    copy.splice(index,1);
+    if(isSpecialSequence(copy)){
+        const num = replicantFiltered[index];
+        console.log(nearestIndex(num,sorted,index));
+    }
+}
