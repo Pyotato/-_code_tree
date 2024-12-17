@@ -3,6 +3,8 @@ const [_,...nums] = fs.readFileSync(0).toString().trim().split('\n');
 
 const numSeq = nums.map(Number);
 
+let answer = 0;
+
 const filterReplicants = (arr)=>{
     return [...arr].reduce((acc,curr)=>{
     if(acc.length===0){
@@ -41,6 +43,9 @@ for(let index in replicantFiltered){
     copy.splice(index,1);
     if(isSpecialSequence(copy)){
         const num = replicantFiltered[index];
-        console.log(nearestIndex(num,sorted,index));
+        answer = nearestIndex(num,sorted,index);
+        
     }
 }
+
+console.log(answer);
