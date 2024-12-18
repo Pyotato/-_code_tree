@@ -10,6 +10,10 @@ let num = 0;
 
 while(cases.length>0){
     const [a,b,c]= cases.pop();
+    if(isConsecutive(a,b,c)){
+        count.push(0);
+        break;
+    }
     // a이동
     if(c-b>=2){
         num++;
@@ -31,6 +35,7 @@ while(cases.length>0){
             cases.push([a,b-1,b]);
         }
     }
+
 }
 
 console.log(Math.min(...count));
