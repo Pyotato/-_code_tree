@@ -10,8 +10,10 @@ const isConsecutive = (a, b, c) => a + 1 === b && b + 1 === c;
 while (cases.length > 0) {
     const [a, b, c, count] = cases.shift();
 
-    const key = `${a},${b},${c}`;
-    if (visited.has(key)) continue;
+    const key = `${a},${b},${c},${count}`;
+    if (visited.has(key)){
+        continue;
+    }
     visited.add(key);
 
     if (isConsecutive(a, b, c)) {
@@ -34,6 +36,8 @@ while (cases.length > 0) {
         }
     }
 }
+
+// console.log(visited);
 
 console.log(minMoves);
 console.log(maxMoves);
