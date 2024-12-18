@@ -1,43 +1,19 @@
 const fs = require('fs');
-const input = fs.readFileSync(0).toString().trim().split(' ').map(Number);
-const cases = [[...input, 0]]; // [a, b, c, count]
-const visited = new Set(); // 방문 여부
-let minMoves = Infinity;
-let maxMoves = -Infinity;
+const [a, b, c]  = fs.readFileSync(0).toString().trim().split(' ').map(Number);
 
-const isConsecutive = (a, b, c) => a + 1 === b && b + 1 === c;
-
-while (cases.length > 0) {
-    const [a, b, c, count] = cases.shift();
-
-    const key = `${a},${b},${c},${count}`;
-    if (visited.has(key)){
-        continue;
-    }
-    visited.add(key);
-
-    if (isConsecutive(a, b, c)) {
-        minMoves = Math.min(minMoves, count);
-        maxMoves = Math.max(maxMoves, count);
-        continue;
-    }
-
-    // a 이동
-    if (c - b >= 2) {
-        for (let i = b + 1; i < c; i++) {
-            cases.push([b, i, c, count + 1]);
-        }
-    }
-
-    // c 이동
-    if (b - a >= 2) {
-        for (let i = b - 1; i > a; i--) {
-            cases.push([a, i, b, count + 1]);
-        }
-    }
+// 최소 이동 횟수 계산
+let minMoves;
+if(b===a+1 && c===b+1){
+    minMoves = 0;
+}
+else if (b - a === 2 || c - b === 2) {
+    minMoves = 1; // 한 번의 이동으로 해결
+} else {
+    minMoves = 2; // 두 번의 이동 필요
 }
 
-// console.log(visited);
+// 최대 이동 횟수 계산
+const maxMoves = Math.max(b - a - 1, c - b - 1);
 
 console.log(minMoves);
 console.log(maxMoves);
