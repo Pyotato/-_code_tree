@@ -3,7 +3,7 @@ const [A,B]  = fs.readFileSync(0).toString().trim().split('\n');
 
 const str = B.split('');
 
-const indexes = str.map(v => A.indexOf(v));
+const indexes = [...new Set(str.map(v => A.indexOf(v)))];
 let count = 1;
 
 const inOrder = (arr)=>{
