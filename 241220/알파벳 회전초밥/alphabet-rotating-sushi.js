@@ -3,22 +3,22 @@ const [A,B]  = fs.readFileSync(0).toString().trim().split('\n');
 
 const str = B.split('');
 
-const indexes = [...new Set(str.map(v => A.indexOf(v)))];
-let count = 1;
+const indexes = str.map(v => A.indexOf(v));
 
-const inOrder = (arr)=>{
-    const copy = [...arr];
-    copy.sort((a,b)=>a-b);
-    return copy.join(',') === arr.join(',');
-}
+let temp;
 
-while(indexes.length>0){
-    if(inOrder(indexes)){
-        break;
+const slices = indexes.reduce((acc,curr,i)=>{
+    if(i===0 || temp>=curr){
+        acc.push([curr]);
+        temp = curr;
+        return acc;
     } else {
-        count++;
+        const prev = acc.pop();
+        temp = curr;
+        prev.push(curr);
+        acc.push(prev);
     }
-    indexes.shift();
-}
+    return acc;
+},[])
 
-console.log(count);
+console.log(slices.length);
