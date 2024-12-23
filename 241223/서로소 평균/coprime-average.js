@@ -1,5 +1,6 @@
 const fs = require('fs');
 const [_,...aX] = fs.readFileSync(0).toString().trim().split('\n');
+
 let [a,...x] = aX;
 a = a.split(' ').map(Number);
 x = +x[0];
