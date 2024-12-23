@@ -12,7 +12,7 @@ const getGCMSet = (n)=>{
     }
     return gcmSet;
 }
-
+// 서로소 : 1빼고는 공통 약수가 없음
 const isCoprime = (setA,setB)=>{
     const filtered = [...setA].filter((v)=>setB.has(v));
     return filtered.length===1;
