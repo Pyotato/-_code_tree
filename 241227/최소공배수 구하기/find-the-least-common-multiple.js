@@ -26,12 +26,12 @@ const getGCM = (N) =>{
     let i = 3;
     if(N%2===0){
         gcm['2'] = gcmCount(copy,2);
-        copy /= ((gcmCount(copy,2))*2);
+        copy /= (2**(gcmCount(copy,2)));
     }
     while(true){
         if(copy%i===0){
             gcm[i] = gcmCount(copy,i);
-            copy /= ((gcmCount(copy,i))*i);
+            copy /= (i**(gcmCount(copy,i)));
         }
         i++;
         if(copy<i){
