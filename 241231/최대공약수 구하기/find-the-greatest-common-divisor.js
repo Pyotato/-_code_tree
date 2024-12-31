@@ -26,18 +26,29 @@ const getDivisors = (n) => {
 const nDivisors = getDivisors(n);
 const mDivisors = getDivisors(m);
 
-const commonDivisors = [...new Set([...Object.keys(nDivisors),...Object.keys(mDivisors)])]
+// 최대 공약수 구하기
+const getGCD = (nDivisors,mDivisors)=>{
+    let answer = 1;
+    const nDivisorsKey = Object.keys(nDivisors);
+    const mDivisorsKey = Object.keys(mDivisors);
 
-let answer = 1;
-
-for(let key of commonDivisors){
-    const nVal = nDivisors[key];
-    const mVal = mDivisors[key];
-    if(nVal!=null && mVal!=null){
-        answer*= (+key)**Math.min(nVal,mVal);
-    }else {
-        answer*= nVal!=null? (+key)**nVal:(+key)**mVal;
+    if(nDivisorsKey.length===0 || mDivisorsKey.length===0){
+        return answer;
     }
+    
+    const commonDivisors = [...new Set([...nDivisorsKey,...mDivisorsKey])]
+
+    for(let key of commonDivisors){
+        const nVal = nDivisors[key];
+        const mVal = mDivisors[key];
+        if(nVal!=null && mVal!=null){
+            answer*= (+key)**Math.min(nVal,mVal);
+        }else {
+            answer*= nVal!=null? (+key)**nVal:(+key)**mVal;
+        }
+    }
+
+    return answer;
 }
 
-console.log(answer);
+console.log(getGCD(nDivisors,mDivisors));
