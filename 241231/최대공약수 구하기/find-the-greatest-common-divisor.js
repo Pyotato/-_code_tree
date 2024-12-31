@@ -6,7 +6,7 @@ const getDivisors = (n) => {
     let N = n;
     const divisors ={};
     
-    for(let i=2;i<n/2;i++){
+    for(let i=2;i<=n/2;i++){
         let count = 0;
         if(N<i){
             return divisors;
@@ -35,12 +35,14 @@ const getGCD = (nDivisors,mDivisors)=>{
     if(nDivisorsKey.length===0 || mDivisorsKey.length===0){
         return answer;
     }
-    
+
     const commonDivisors = [...new Set([...nDivisorsKey,...mDivisorsKey])]
 
     for(let key of commonDivisors){
         const nVal = nDivisors[key];
         const mVal = mDivisors[key];
+
+        // 공통으로 존재하는 약수만 곱해주기
         if(nVal!=null && mVal!=null){
             answer*= (+key)**Math.min(nVal,mVal);
         }
