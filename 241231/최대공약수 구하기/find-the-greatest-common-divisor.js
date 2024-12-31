@@ -43,8 +43,6 @@ const getGCD = (nDivisors,mDivisors)=>{
         const mVal = mDivisors[key];
         if(nVal!=null && mVal!=null){
             answer*= (+key)**Math.min(nVal,mVal);
-        }else {
-            answer*= nVal!=null? (+key)**nVal:(+key)**mVal;
         }
     }
 
