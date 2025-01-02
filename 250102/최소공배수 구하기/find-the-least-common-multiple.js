@@ -9,7 +9,7 @@ const [n, m] = fs.readFileSync(0).toString().trim().split(' ').map(Number);
 const getGCDs = (n) => {
     const gcms = {};
     let N = n;
-    for(let i=2;i<=n/2;i++){
+    for(let i=2;i<=n;i++){
         while(N>1){
             if(N%i===0){
                 N/=i;
