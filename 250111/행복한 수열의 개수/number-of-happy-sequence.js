@@ -33,7 +33,7 @@ const isHappySeq = (arr,m)=>{
         return acc;
     },{});
     const filtered = Object.values(nums).filter((v)=>v.length>=m).flat();
-    return filtered.length === 0 || filtered.length < m ? false:isConsecutive(filtered,m);
+    return filtered.length === 0 ? false:isConsecutive(filtered,m);
 }
 
 const happySeqCount = (n,m)=>{
