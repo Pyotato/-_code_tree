@@ -2,38 +2,26 @@ const fs = require('fs');
 
 const [nm,...numbers] = fs.readFileSync(0).toString().trim().split('\n');
 const grid = numbers.map(v=>v.split(' ').map(Number));
-
-const isConsecutive = (arr,m)=>{
-    const copy = [...arr];
-    let current = copy.shift();
-    let seq = new Set();
-    while(copy.length>0){
-        let next = copy.shift();
-        if(next-current===1){
-            seq.add(current);
-            seq.add(next);
-        } else {
-            seq = new Set([next]);
-        }
-        if(seq.size>=m){
-            return true;
-        }
-        current = next;
-    }
-   return seq.size>=m;
-}
+const [n,m] = nm.split(' ').map(Number);
 
 const isHappySeq = (arr,m)=>{
-    const nums = arr.reduce((acc,curr,i)=>{
-        if(acc[curr]==null){
-            acc[curr] = [i];
+    const copy = [...arr];
+    let curr = copy.shift();
+    let count = 1;
+    while(copy.length>0){
+        let next = copy.shift();
+        if(curr===next){
+            count++;
         } else {
-            acc[curr].push(i);
+            count = 1;
         }
-        return acc;
-    },{});
-    const filtered = Object.values(nums).filter((v)=>v.length>=m).flat();
-    return filtered.length === 0 ? false:isConsecutive(filtered,m);
+        if(count>=m){
+            return true;
+        }
+        curr = next;
+    }
+
+    return count>=m;
 }
 
 const happySeqCount = (n,m)=>{
@@ -44,13 +32,17 @@ const happySeqCount = (n,m)=>{
     } else {
         for(let i=0;i<n;i++){
             // 행과 열이 각각 행복한 행복한 수열이라면 추가
-            const row = isHappySeq(grid[i],m);
-            const col = isHappySeq(grid.map(v=>v[i]),m);
-            count = row ? count+1:count; 
-            count = col ? count+1:count;
+            const row = grid[i];
+            const col =  grid.map(v => v[i]);
+            if(isHappySeq(row,m)){
+                count++;
+            }
+            if(isHappySeq(col,m)){
+                count++;
+            }
         }
     }
     return count;
 }
 
-console.log(happySeqCount(...nm.split(' ').map(Number)));
+console.log(happySeqCount(n,m));
