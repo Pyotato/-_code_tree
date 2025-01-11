@@ -15,6 +15,9 @@ const isConsecutive = (arr,m)=>{
         } else {
             seq = new Set([next]);
         }
+        if(seq.size>=m){
+            return true;
+        }
         current = next;
     }
    return seq.size>=m;
