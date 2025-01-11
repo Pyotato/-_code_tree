@@ -3,22 +3,21 @@ const fs = require('fs');
 const [nm,...numbers] = fs.readFileSync(0).toString().trim().split('\n');
 const grid = numbers.map(v=>v.split(' ').map(Number));
 
-
 const isConsecutive = (arr,m)=>{
     const copy = [...arr];
     let current = copy.shift();
-    let seq = [];
+    let seq = new Set();
     while(copy.length>0){
         let next = copy.shift();
         if(next-current===1){
-            seq.push(current);
-            seq.push(next);
+            seq.add(current);
+            seq.add(next);
         } else {
-            seq = [next];
+            seq = new Set([next]);
         }
         current = next;
     }
-   return seq.length>=m;
+   return seq.size>=m;
 }
 
 const isHappySeq = (arr,m)=>{
@@ -30,8 +29,8 @@ const isHappySeq = (arr,m)=>{
         }
         return acc;
     },{});
-    const filtered = Object.values(nums).filter((v)=>v.length>=m);
-    return filtered.length===0? false:isConsecutive(...filtered,m);
+    const filtered = Object.values(nums).filter((v)=>v.length>=m).flat();
+    return filtered.length === 0 || filtered.length < m ? false:isConsecutive(filtered,m);
 }
 
 const happySeqCount = (n,m)=>{
@@ -41,9 +40,10 @@ const happySeqCount = (n,m)=>{
         return 2*n;
     } else {
         for(let i=0;i<n;i++){
+            // 행과 열이 각각 행복한 행복한 수열이라면 추가
             const row = isHappySeq(grid[i],m);
             const col = isHappySeq(grid.map(v=>v[i]),m);
-            count = row ? count+1:count;
+            count = row ? count+1:count; 
             count = col ? count+1:count;
         }
     }
