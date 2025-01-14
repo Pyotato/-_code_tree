@@ -49,10 +49,11 @@ const calcProfit = (x,y)=>{
     const currGold = mine[x][y];
     const arr = Array.from({length:n},()=>[currGold,calcCost(currGold,1)]);
     for(let i=1;i<n+1;i++){
-        arr[i-1] =checkDiamondGrid(x,y,i);
+        arr[i-1]= checkDiamondGrid(x,y,i);
     }
     arr.sort((a,b)=>b[1]-a[1]);
-    return arr[0][0];
+    const [gold,profit] = arr[0];
+    return profit>=0?gold:0;
 }
 
 const goldCount = Array.from({length:n},()=>Array.from({length:n},()=>[]));
@@ -64,5 +65,4 @@ for(let i=0;i<n;i++){
     }
 }
 
-// console.log(goldCount,max);
 console.log(Math.max(...goldCount.flat()));
