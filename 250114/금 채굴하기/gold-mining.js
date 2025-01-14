@@ -48,7 +48,7 @@ const checkDiamondGrid = (x,y,k)=>{
 const calcProfit = (x,y)=>{
     const currGold = mine[x][y];
     const arr = Array.from({length:n+1},()=>[currGold,calcCost(currGold,0)]);
-    for(let i=1;i<=n+1;i++){
+    for(let i=1;i<n+1;i++){
         arr[i-1]= checkDiamondGrid(x,y,i);
     }
     arr.sort((a,b)=>b[1]-a[1]);
