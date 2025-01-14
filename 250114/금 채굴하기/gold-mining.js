@@ -4,65 +4,59 @@ const [nm,...nums]= fs.readFileSync(0).toString().trim().split('\n');
 const [n,m] = nm.split(' ').map(Number);
 const mine = nums.map(v=>v.split(' ').map(Number));
 
-const calcCost = (diamonds,k)=>{
-    return diamonds*m - (k*k+(k+1)*(k+1));
-}
 
-const checkDiamondGrid = (x,y,k)=>{
-    const arr = [];
-    let indice = [];
-    let count=0;
+const checkRange = (x, y) => x >= 0 && y >= 0 && x < n && y < n;
 
-    const addDiamond =(i,j)=>{
-        if(i>=0 && i<n && j>=0 && j<n){
-            arr.push(mine[i][j]);
-            indice.push([i,j]);
+  const getGold = (arr) => {
+    let cntGold = 0;
+    arr.forEach(([x, y]) => {
+      if (mine[x][y] === 1) cntGold++;
+    });
+    return cntGold;
+  };
+
+  const bfs = (queue, visited, currK) => {
+    const dx = [1, -1, 0, 0];
+    const dy = [0, 0, 1, -1];
+    const bfsList = [];
+
+    while (queue.length > 0) {
+      const [x, y, k] = queue.shift();
+
+      for (let d = 0; d < 4; d++) {
+        const nx = x + dx[d];
+        const ny = y + dy[d];
+        if (checkRange(nx, ny) && !visited[nx][ny] && k + 1 <= currK) {
+          queue.push([nx, ny, k + 1]);
+          visited[nx][ny] = true;
+          bfsList.push([nx, ny, k + 1]);
         }
+      }
     }
+    return bfsList;
+  };
 
-    for(let i=x;i<=x+k;i++){
-        for(let j=y-k+count;j<y;j++){
-            addDiamond(i,j);
+  let answer = 0;
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      for (let kk = 0; kk <= n; kk++) {
+        const currK = kk;
+        const visited = Array.from({ length: n }, () => Array(n).fill(false));
+        const center = [i, j, 0];
+        visited[i][j] = true;
+
+        const queue = [center];
+        const bfsList = bfs(queue, visited, currK);
+
+        const cost = currK * currK + (currK + 1) * (currK + 1);
+        const earn = getGold(bfsList);
+
+        if (cost <= earn * m) {
+          answer = Math.max(answer, earn);
         }
-        for(let j=y;j<=y+k-count;j++){
-            addDiamond(i,j);
-        }
-        count++;
+      }
     }
-    count=0;
-    for(let i=x-1;i>=x-k;i--){
-        for(let j=y-k+count+1;j<y;j++){
-            addDiamond(i,j);
-        }
-        for(let j=y;j<y+k-count;j++){
-            addDiamond(i,j);
-        }
-        count++;
-    }
+  }
 
-    const diamonds = arr.reduce((acc,curr)=>acc+curr,0);
-    const cost = calcCost(diamonds,k);
-    return [diamonds,cost];
-}
-
-const calcProfit = (x,y)=>{
-    const currGold = mine[x][y];
-    const arr = Array.from({length:n+1},()=>[currGold,calcCost(currGold,0)]);
-    for(let i=1;i<n+1;i++){
-        arr[i-1]= checkDiamondGrid(x,y,i);
-    }
-    arr.sort((a,b)=>b[1]-a[1]);
-    const [gold,profit] = arr[0];
-    return profit>=0?gold:0;
-}
-
-const goldCount = Array.from({length:n},()=>Array.from({length:n},()=>[]));
-
-for(let i=0;i<n;i++){
-    for(let j=0;j<n;j++){
-        const profit = calcProfit(i,j);
-        goldCount[i][j] = profit;
-    }
-}
-
-console.log(Math.max(...goldCount.flat()));
+  console.log(answer);
