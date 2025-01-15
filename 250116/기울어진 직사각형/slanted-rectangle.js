@@ -43,15 +43,15 @@ const sumArea = (bottomRight, topRight, topLeft, bottomLeft)=>{
   const [x2,y2] = topRight;
   const [x3,y3] = topLeft;
   const [x4,y4] = bottomLeft;
-  // console.log(bottomRight, topRight, topLeft, bottomLeft);
-  // const items = [];
+  
+  const items = [];
   let sum = 0;
   let j = y1;
 
   for(let i=x1;i>x2 && j<y2;i--){
     if(isInRange(i,j)){
       sum+=grid[i][j];
-      // items.push([i,j]);
+      items.push([i,j]);
     }
     j++;
   }
@@ -59,20 +59,26 @@ const sumArea = (bottomRight, topRight, topLeft, bottomLeft)=>{
   for(let i=x2;i>x3 && j>y3;i--){
     if(isInRange(i,j)){
       sum+=grid[i][j];
-      // items.push([i,j]);
+      items.push([i,j]);
     }
     j--;
   }
   j = y3;
-  for(let i=x3;i<=x4 && j>=y4;i++){
+  for(let i=x3;i<x4 && j>y4;i++){
     if(isInRange(i,j)){
       sum+=grid[i][j];
-      // items.push([i,j]);
+      items.push([i,j]);
     }
     j--;
   }
-  // console.log(items);
-
+  j = y4;
+  for(let i=x4;i<x1 && j<y1;i++){
+    if(isInRange(i,j)){
+      sum+=grid[i][j];
+      items.push([i,j]);
+    }
+    j++;
+  }
   return sum;
 }
 
