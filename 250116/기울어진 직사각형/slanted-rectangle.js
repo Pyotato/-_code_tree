@@ -1,104 +1,58 @@
 const fs = require('fs');
 
-const [N, ...nums] = fs.readFileSync(0).toString().trim().split('\n');
+// Read input
+const input = fs.readFileSync(0).toString().trim().split('\n');
 
-const n = +N;
-const grid = nums.map(v => v.split(' ').map(Number));
+const n = parseInt(input[0]);
+const board = input.slice(1).map(line => line.split(' ').map(Number));
 
-const isInRange = (x, y) => x >= 0 && x < n && y >= 0 && y < n;
+// Directions for the diagonals (dxs and dys)
+const dxs = [-1, -1, 1, 1];
+const dys = [1, -1, -1, 1];
 
-const rectangleCheck = (x, y) => {
-  let j = y + 1;
-  const moves = [];
-  let points = null;
+// Function to check if coordinates are within the board range
+const inRange = (nx, ny) => nx >= 0 && nx < n && ny >= 0 && ny < n;
 
-  for (let i = x - 1; i >= 0; i--) {
-    if (isInRange(i, j)) {
-      moves.push([i, j]);
-    }
-    j++;
-  }
+// Function to calculate the score of a parallelogram boundary
+const getScore = (x, y, w, h) => {
+  const moveSizes = [w, h, w, h];
+  let total = 0;
 
-  if (moves.length === 0) {
-    return null;
-  }
+  for (let d = 0; d < 4; d++) {
+    const dx = dxs[d];
+    const dy = dys[d];
+    const length = moveSizes[d];
 
-  while (moves.length > 0) {
-    const [nx, ny] = moves.shift();
-    let nj = ny - 1;
-    let countMoves = 1;
-    for (let ni = nx - 1; ni >= 0; ni--) {
-      if (
-        isInRange(ni, nj) &&
-        isInRange(x - countMoves, y - countMoves)
-      ) {
-        points = [[x, y], [nx, ny], [ni, nj], [x - countMoves, y - countMoves]];
-        return points;
+    for (let step = 0; step < length; step++) {
+      x += dx;
+      y += dy;
+
+      // If out of bounds, return 0 as this parallelogram is invalid
+      if (!inRange(x, y)) {
+        return 0;
       }
-      countMoves++;
-      nj--;
+
+      // Add the value to the total
+      total += board[x][y];
     }
   }
 
-  return null;
+  return total;
 };
 
-const sumArea = (bottomRight, topRight, topLeft, bottomLeft) => {
-  const [x1, y1] = bottomRight;
-  const [x2, y2] = topRight;
-  const [x3, y3] = topLeft;
-  const [x4, y4] = bottomLeft;
-
-  let sum = 0;
-  let j = y1;
-
-  // Bottom-right to Top-right
-  for (let i = x1; i > x2; i--) {
-    if (isInRange(i, j)) sum += grid[i][j];
-    j++;
-  }
-
-  // Top-right to Top-left
-  j = y2;
-  for (let i = x2; i > x3; i--) {
-    if (isInRange(i, j)) sum += grid[i][j];
-    j--;
-  }
-
-  // Top-left to Bottom-left
-  j = y3;
-  for (let i = x3; i < x4; i++) {
-    if (isInRange(i, j)) sum += grid[i][j];
-    j--;
-  }
-
-  // Bottom-left to Bottom-right
-  j = y4;
-  for (let i = x4; i < x1; i++) {
-    if (isInRange(i, j)) sum += grid[i][j];
-    j++;
-  }
-
-  return sum;
-};
-
-
-const arr = [];
+// Main logic to find the maximum score
+let ans = 0;
 
 for (let i = 0; i < n; i++) {
   for (let j = 0; j < n; j++) {
-    const areas = rectangleCheck(i, j);
-    if (areas != null) {
-      arr.push(areas);
+    for (let w = 1; w < n; w++) {
+      for (let h = 1; h < n; h++) {
+        // Calculate the score for a parallelogram starting at (i, j) with width `w` and height `h`
+        ans = Math.max(ans, getScore(i, j, w, h));
+      }
     }
   }
 }
 
-let maxSum = -Infinity;
-
-for (let points of arr) {
-  const sum = sumArea(...points);
-  maxSum = Math.max(maxSum, sum);
-}
-
-console.log(maxSum);
+// Print the result
+console.log(ans);
