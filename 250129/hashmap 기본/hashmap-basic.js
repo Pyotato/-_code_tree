@@ -1,17 +1,17 @@
 const fs = require('fs');
 const input = fs.readFileSync(0).toString().trim().split('\n');
 input.shift();
-const hashMap = {};
+const hashMap = new Map();
 
 const commands = {
     'add' :(k,v) => {
-        hashMap[k] = v;
+        hashMap.add(v);
     },
     'remove' :(k) => {
-         delete hashMap[k];
+        hashMap.delete(k);
     },
     'find': (k) =>{
-        console.log(hashMap[k]==null? "None": hashMap[k])
+        console.log(hashMap.has(k)?hashMap.get(k): "None");
     }
 }
 
